@@ -3,35 +3,60 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Ocraft Web</title>
+  <title>Ocraft</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="menu">
-    <div class="panel">
-      <h1>OCRAFT</h1>
-      <p>Play Ocraft directly in your browser.</p>
-      <button id="playBtn">PLAY</button>
-      <p class="help">WASD move · Space jump · Mouse look · Left click mine · Right click place · 1–9 hotbar</p>
-    </div>
-  </div>
+  <div class="page-wrap">
+    <header id="siteHeader">
+      <div class="brand-row">
+        <div class="site-logo">OCRAFT</div>
+        <div class="site-tagline">A block building game</div>
+      </div>
+      <nav class="classic-nav" aria-label="Main navigation">
+        <a href="#" class="active">Home</a>
+        <a href="#gameShell">Play</a>
+        <span>Community</span>
+        <span>About</span>
+      </nav>
+    </header>
 
-  <div id="hud">
-    <div id="crosshair">+</div>
-    <div id="hotbar">
-      <div class="slot selected" data-slot="0"><span class="block-icon grass"></span><b>1</b></div>
-      <div class="slot" data-slot="1"><span class="block-icon dirt"></span><b>2</b></div>
-      <div class="slot" data-slot="2"><span class="block-icon stone"></span><b>3</b></div>
-      <div class="slot" data-slot="3"><span class="block-icon sand"></span><b>4</b></div>
-      <div class="slot empty" data-slot="4"><b>5</b></div>
-      <div class="slot empty" data-slot="5"><b>6</b></div>
-      <div class="slot empty" data-slot="6"><b>7</b></div>
-      <div class="slot empty" data-slot="7"><b>8</b></div>
-      <div class="slot empty" data-slot="8"><b>9</b></div>
-    </div>
-  </div>
+    <main id="gameShell" aria-label="Ocraft game">
+      <canvas id="game"></canvas>
 
-  <canvas id="game"></canvas>
+      <div id="menu">
+        <div class="menu-inner">
+          <div class="game-logo">OCRAFT</div>
+          <div class="version-text">classic browser edition</div>
+          <button id="playBtn" class="classic-button">PLAY</button>
+          <button id="multiplayerBtn" class="classic-button secondary" type="button">MULTIPLAYER</button>
+          <p class="help">WASD move · Space jump · Mouse look · Left click mine · Right click place · 1–9 hotbar</p>
+        </div>
+      </div>
+
+      <div id="hud">
+        <div id="crosshair">+</div>
+        <div id="hotbar">
+          <div class="slot selected" data-slot="0"><span class="block-icon grass"></span><b>1</b></div>
+          <div class="slot" data-slot="1"><span class="block-icon dirt"></span><b>2</b></div>
+          <div class="slot" data-slot="2"><span class="block-icon stone"></span><b>3</b></div>
+          <div class="slot" data-slot="3"><span class="block-icon sand"></span><b>4</b></div>
+          <div class="slot empty" data-slot="4"><b>5</b></div>
+          <div class="slot empty" data-slot="5"><b>6</b></div>
+          <div class="slot empty" data-slot="6"><b>7</b></div>
+          <div class="slot empty" data-slot="7"><b>8</b></div>
+          <div class="slot empty" data-slot="8"><b>9</b></div>
+        </div>
+      </div>
+    </main>
+
+    <section class="old-news">
+      <h2>Ocraft Alpha</h2>
+      <p>Build, mine, and explore right in your browser. This page is styled after the simple game sites of 2009.</p>
+    </section>
+
+    <footer>Ocraft · Browser Alpha</footer>
+  </div>
 
   <script type="importmap">
   {

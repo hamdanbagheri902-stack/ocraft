@@ -4,12 +4,21 @@ import { terrainHeight, columnBlocks } from './terrain.js';
 const canvas = document.getElementById('game');
 const menu = document.getElementById('menu');
 const playBtn = document.getElementById('playBtn');
+const multiplayerBtn = document.getElementById('multiplayerBtn');
+const gameShell = document.getElementById('gameShell');
 const hud = document.getElementById('hud');
 const slots = [...document.querySelectorAll('.slot')];
 
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: false });
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-renderer.setSize(window.innerWidth, window.innerHeight);
+function resizeRendererToGameShell() {
+  const width = Math.max(1, gameShell.clientWidth);
+  const height = Math.max(1, gameShell.clientHeight);
+  renderer.setSize(width, height, false);
+  camera.aspect = width / height;
+  camera.updateProjectionMatrix();
+}
+
 renderer.shadowMap.enabled = false;
 
 const scene = new THREE.Scene();
@@ -18,7 +27,7 @@ scene.fog = new THREE.Fog(0x87ceeb, 20, 55);
 
 const camera = new THREE.PerspectiveCamera(
   75,
-  window.innerWidth / window.innerHeight,
+  16 / 9,
   0.1,
   100
 );
@@ -93,6 +102,7 @@ const player = {
 };
 
 camera.position.copy(player.position);
+resizeRendererToGameShell();
 
 const keys = Object.create(null);
 let selectedType = 0;
@@ -127,6 +137,11 @@ window.addEventListener('keyup', e => {
   keys[e.code] = false;
 });
 
+
+multiplayerBtn.addEventListener('click', () => {
+  multiplayerBtn.textContent = 'COMING SOON';
+  setTimeout(() => { multiplayerBtn.textContent = 'MULTIPLAYER'; }, 1200);
+});
 playBtn.addEventListener('click', () => {
   canvas.requestPointerLock();
 });
@@ -253,6 +268,7 @@ function update(dt) {
   }
 
   camera.position.copy(player.position);
+resizeRendererToGameShell();
   camera.rotation.order = 'YXZ';
   camera.rotation.y = player.yaw;
   camera.rotation.x = player.pitch;
@@ -270,5 +286,12 @@ animate();
 window.addEventListener('resize', () => {
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
-  renderer.setSize(window.innerWidth, window.innerHeight);
+  function resizeRendererToGameShell() {
+  const width = Math.max(1, gameShell.clientWidth);
+  const height = Math.max(1, gameShell.clientHeight);
+  renderer.setSize(width, height, false);
+  camera.aspect = width / height;
+  camera.updateProjectionMatrix();
+}
+
 });
