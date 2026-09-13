@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { terrainHeight, columnBlocks } from './terrain.js';
 
 const canvas = document.getElementById('game');
 const menu = document.getElementById('menu');
@@ -69,26 +70,20 @@ function removeBlock(mesh) {
 }
 
 function generateWorld() {
-  for (let x = -12; x <= 12; x++) {
-    for (let z = -12; z <= 12; z++) {
-      addBlock(x, -1, z, 0);
-      addBlock(x, -2, z, 1);
-
-      if ((x * 13 + z * 7) % 37 === 0 && Math.abs(x) > 3 && Math.abs(z) > 3) {
-        addBlock(x, 0, z, 2);
+  for (let x = -14; x <= 14; x++) {
+    for (let z = -14; z <= 14; z++) {
+      const height = terrainHeight(x, z);
+      for (const block of columnBlocks(height)) {
+        addBlock(x, block.y, z, block.type);
       }
     }
-  }
-
-  for (let x = -2; x <= 2; x++) {
-    addBlock(x, 0, 7, 3);
   }
 }
 
 generateWorld();
 
 const player = {
-  position: new THREE.Vector3(0, 1.7, 5),
+  position: new THREE.Vector3(0, terrainHeight(0, 5) + 2.7, 5),
   velocity: new THREE.Vector3(),
   yaw: 0,
   pitch: 0,
@@ -101,11 +96,13 @@ camera.position.copy(player.position);
 
 const keys = Object.create(null);
 let selectedType = 0;
+let selectedSlot = 0;
 let locked = false;
 
 function selectSlot(index) {
-  selectedType = Math.max(0, Math.min(blockTypes.length - 1, index));
-  slots.forEach((slot, i) => slot.classList.toggle('selected', i === selectedType));
+  selectedSlot = Math.max(0, Math.min(slots.length - 1, index));
+  if (selectedSlot < blockTypes.length) selectedType = selectedSlot;
+  slots.forEach((slot, i) => slot.classList.toggle('selected', i === selectedSlot));
 }
 
 window.addEventListener('keydown', e => {
@@ -114,6 +111,11 @@ window.addEventListener('keydown', e => {
   if (e.code === 'Digit2') selectSlot(1);
   if (e.code === 'Digit3') selectSlot(2);
   if (e.code === 'Digit4') selectSlot(3);
+  if (e.code === 'Digit5') selectSlot(4);
+  if (e.code === 'Digit6') selectSlot(5);
+  if (e.code === 'Digit7') selectSlot(6);
+  if (e.code === 'Digit8') selectSlot(7);
+  if (e.code === 'Digit9') selectSlot(8);
 
   if (e.code === 'Space' && player.onGround) {
     player.velocity.y = 6.2;
@@ -179,7 +181,7 @@ document.addEventListener('mousedown', e => {
       p.y < player.position.y + 0.4
     ) return;
 
-    addBlock(p.x, p.y, p.z, selectedType);
+    if (selectedSlot < blockTypes.length) addBlock(p.x, p.y, p.z, selectedType);
   }
 });
 

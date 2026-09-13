@@ -5,6 +5,7 @@ html, body {
   overflow: hidden;
   background: #111;
   font-family: Arial, Helvetica, sans-serif;
+  image-rendering: pixelated;
 }
 
 #game {
@@ -23,11 +24,7 @@ html, body {
   place-items: center;
   background:
     linear-gradient(rgba(0,0,0,.38), rgba(0,0,0,.55)),
-    repeating-linear-gradient(
-      45deg,
-      #3e7d2b 0 24px,
-      #4f9636 24px 48px
-    );
+    repeating-linear-gradient(45deg, #3e7d2b 0 24px, #4f9636 24px 48px);
 }
 
 .panel {
@@ -82,53 +79,85 @@ h1 {
   top: 50%;
   transform: translate(-50%, -52%);
   color: white;
-  font-size: 34px;
+  font-size: 32px;
   font-family: monospace;
-  text-shadow: 1px 1px 2px black;
+  text-shadow: 2px 2px 0 #222;
 }
 
 #hotbar {
   position: absolute;
   left: 50%;
-  bottom: 26px;
+  bottom: 20px;
   transform: translateX(-50%);
   display: flex;
-  gap: 6px;
-  background: rgba(0,0,0,.55);
-  padding: 7px;
-  border: 2px solid rgba(255,255,255,.45);
+  gap: 0;
+  padding: 4px;
+  background: #6a6a6a;
+  border: 3px solid #1f1f1f;
+  box-shadow:
+    inset 2px 2px 0 #bcbcbc,
+    inset -2px -2px 0 #3b3b3b,
+    0 2px 0 rgba(0,0,0,.35);
 }
 
 .slot {
-  width: 54px;
-  height: 54px;
-  border: 2px solid #777;
-  background: rgba(30,30,30,.85);
+  width: 48px;
+  height: 48px;
+  box-sizing: border-box;
   position: relative;
   display: grid;
   place-items: center;
+  background: #777;
+  border-top: 2px solid #3b3b3b;
+  border-left: 2px solid #3b3b3b;
+  border-right: 2px solid #aaa;
+  border-bottom: 2px solid #aaa;
 }
 
 .slot.selected {
-  outline: 4px solid white;
+  z-index: 1;
+  outline: 3px solid #eee;
+  outline-offset: -1px;
+  background: #8a8a8a;
 }
 
 .slot b {
   position: absolute;
-  right: 4px;
+  right: 3px;
   bottom: 1px;
   color: white;
-  font-size: 13px;
+  font-family: monospace;
+  font-size: 11px;
+  text-shadow: 1px 1px 0 #111;
 }
 
-.swatch {
-  width: 30px;
-  height: 30px;
+.block-icon {
+  width: 29px;
+  height: 29px;
   display: block;
-  border: 2px solid rgba(0,0,0,.35);
+  border: 2px solid rgba(0,0,0,.45);
+  box-shadow: inset 2px 2px 0 rgba(255,255,255,.12);
 }
 
-.grass { background: #59a83d; }
-.dirt  { background: #805735; }
-.stone { background: #7d7d7d; }
-.sand  { background: #d9c27f; }
+.grass {
+  background: linear-gradient(#5aa53b 0 32%, #79502f 32% 100%);
+}
+.dirt {
+  background: repeating-linear-gradient(45deg, #7c5334 0 5px, #6b452d 5px 9px);
+}
+.stone {
+  background: repeating-linear-gradient(135deg, #858585 0 6px, #737373 6px 11px);
+}
+.sand {
+  background: repeating-linear-gradient(45deg, #d8c67d 0 7px, #c9b66f 7px 10px);
+}
+.empty::after {
+  content: '';
+  width: 24px;
+  height: 24px;
+  border: 1px solid rgba(255,255,255,.05);
+}
+
+@media (max-width: 560px) {
+  #hotbar { transform: translateX(-50%) scale(.76); transform-origin: bottom center; }
+}
